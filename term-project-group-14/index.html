@@ -1,0 +1,152 @@
+<!-- Graphics Example Code.  index.html - The web page document containing the canvas (drawing surface), that launches your javascript files. //-->
+<!DOCTYPE html> <html> <head> <meta charset="UTF-8"/> <link rel="icon" href="assets/fav.ico">
+<script> window.tiny_graphics = {};             // Store all our JavaScipt code inside of classes here.
+         window.classes = {}
+         </script>
+<script src="tiny-graphics.js" ></script>  <!--  Javascript "include" files.  Any code in them gets executed as part of the page loading. //-->
+<script src= "dependencies.js" ></script>
+<script src=   "main-scene.js" ></script>
+<style>
+  * { font-family: monospace }
+  /*
+  #player1{
+    left: 600px;
+    top: 350px;
+    position: absolute;
+    z-index: 5;
+    margin-left: 5.5%;
+  }
+  #player2
+  {
+    left: 375px;
+    top: 350px;
+    position: absolute;
+    z-index: 5;
+    margin-left: 1%;
+  }
+  */
+  #pong{
+    left: 600px;
+    top: 350px;
+    z-index: 5;
+    margin-top: -24%;
+    margin-left: -7%;
+  }
+  #score{
+    left: 600px;
+    top: 350px;
+    z-index: 5;
+    margin-top: -24%;
+    margin-left: 11%;
+  }
+  #maxscore{
+    left: 600px;
+    top: 350px;
+    z-index: 5;
+    margin-top: -23.8%;
+    margin-left: 25%;
+  }
+  #speed{
+    left: 600px;
+    top: 350px;
+    z-index: 5;
+    margin-top: -23.8%;
+    margin-left: -30%;
+  }
+  #realspeed{
+    left: 600px;
+    top: 350px;
+    z-index: 5;
+    margin-top: -23.8%;
+    margin-left: -20%;
+  }
+  #scored{
+    left: 600px;
+    top: 350px;
+    z-index: 5;
+    margin-right: 50%;
+    margin-left: -8%;
+  }
+  
+
+  h1 {
+    right: 375px;
+    top: 10px;
+    position: absolute;
+    z-index: 5;
+    font-size: 35px;
+    color: blue;
+
+    text-shadow: 0 1px 0 #ccc,
+                 0 2px 0 #c9c9c9,
+                 0 3px 0 #bbb,
+                 0 4px 0 #b9b9b9,
+                 0 5px 0 #aaa,
+                 0 6px 1px rgba(0,0,0,.1),
+                 0 0 5px rgba(0,0,0,.1),
+                 0 1px 3px rgba(0,0,0,.3),
+                 0 3px 5px rgba(0,0,0,.2),
+                 0 5px 10px rgba(0,0,0,.25),
+                 0 10px 10px rgba(0,0,0,.2),
+                 0 20px 20px rgba(0,0,0,.15);
+    -webkit-animation: glow 1s ease-in-out infinite alternate,tcolor 1s ease-in-out infinite alternate;
+   -moz-animation: glow 1s ease-in-out infinite alternate,tcolor 1s ease-in-out infinite alternate;
+   animation: glow 1s ease-in-out infinite alternate, tcolor 1s ease-in-out infinite alternate;
+  }
+  @-webkit-keyframes tcolor
+  {
+    from {color:blue;}
+    to {color: yellow;}
+  }
+
+  @-webkit-keyframes glow {
+  from {
+    text-shadow: 0 5px 10px #fff, 0 10px 20px #fff, 0 15px 30px #e60073, 0 20px 40px #e60073, 0 25px 50px #e60073, 0 30px 60px #e60073, 0 7px 70px #e60073;
+  }
+  to {
+    text-shadow: 0 1px 20px #fff, 0 2px 30px #ff4da6, 0 3px 40px #ff4da6, 0 4px 50px #ff4da6, 0 5px 60px #ff4da6, 0 6px 70px #ff4da6, 0 7px 80px #ff4da6;
+  }}
+  body { background: DarkGray }
+  div { background: white }
+  canvas { width: 1080px; height: 600px; margin-bottom:-3px }
+  .canvas-widget { width: 1080px; background: DimGray }
+  table { border-collapse: collapse; display:block; overflow-x: auto; }
+  table.control-box { width: 1080px; border:0; margin:0; max-height:380px; transition:.5s; overflow-y:scroll; background:DimGray }
+  table.control-box:hover { max-height:500px }
+  table.control-box td { overflow:hidden; border:0; background:DimGray; border-radius:30px }
+  table.control-box td .control-div { background: #EEEEEE; height:338px; padding: 5px 5px 5px 30px; box-shadow: 25px 0px 60px -15px inset }
+  table.control-box td * { background:transparent }
+  table.control-box .control-div td { border-radius:unset }
+  table.control-box .control-title { padding:7px 40px; color:white; background:DarkSlateGray; box-shadow: 25px 0px 70px -15px inset black }
+  .live_string { display:inline-block; background: unset }
+  table, th, td { border: 2px solid black; vertical-align: top; white-space: nowrap }
+  button { background: #4C9F50; color: white; padding: 6px; border-radius:9px;
+           box-shadow: 4px 6px 16px 0px rgba(0,0,0,0.3); transition: background .3s, transform .3s }
+  button:hover, button:focus { transform: scale(1.3); color:gold }
+  .link { text-decoration:underline; cursor: pointer }
+  .show { transform: scaleY(1); height:200px; overflow:auto }
+  .hide { transform: scaleY(0); height:0px; overflow:hidden  }
+</style>
+</head><body>       <!-- Begin typing the next of your web page here. //-->
+
+<div id="main-canvas" class="canvas-widget"></div>
+<!--
+<h1 id="player1">0</h1>
+<h1 id="player2">0</h1>
+-->
+<h1 id="pong">3DPong</h1>
+<h1 id="score">MaxScore: </h1>
+<h1 id="speed">Speed: </h1>
+<h1 id="realspeed"></h1>
+<h1 id="maxscore"></h1>
+<h1 id="scored"><center></center></h1>
+<script> "use strict"     // ********************* THE ENTRY POINT OF YOUR WHOLE PROGRAM STARTS HERE *********************
+                                           // Use this code to embed a widget into any web page.  The widget inclues a 3D WebGL area
+                                           // (an HTML canvas) and various panels of controls.
+  const scenes = [ "Assignment_Two_Test" ];// First, list the names of scenes we will add to our canvas.  These will register themselves
+                                           // with this widget's Canvas_Manager so that their code can be called upon every time a
+                                           // draw / keyboard / mouse event happens on the web page.
+  new Canvas_Widget( "main-canvas", scenes );             // Use the Canvas_Widget class to display the WebGL demo.  Pass in
+                                                          // the name of the HTML element we are to replace with the widget.
+</script>
+</body></html>
